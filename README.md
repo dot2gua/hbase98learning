@@ -1,1 +1,1 @@
-"# hbase98learning" 
+这是从hbase0.98 down下来的代码，仅用于学习hbase源码使用
