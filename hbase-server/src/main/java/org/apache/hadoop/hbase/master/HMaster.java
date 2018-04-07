@@ -258,6 +258,7 @@ import com.google.protobuf.RpcCallback;
 import com.google.protobuf.RpcController;
 import com.google.protobuf.Service;
 import com.google.protobuf.ServiceException;
+
 @InterfaceAudience.Private
 @SuppressWarnings("deprecation")
 public class HMaster extends HasThread implements MasterProtos.MasterService.BlockingInterface,
@@ -516,14 +517,12 @@ public class HMaster extends HasThread implements MasterProtos.MasterService.Blo
         if (isHealthCheckerConfigured()) {
             healthCheckChore = new HealthCheckChore(sleepTime, this, getConfiguration());
         }
-
         // Do we publish the status?
         boolean shouldPublish = conf.getBoolean(HConstants.STATUS_PUBLISHED,
                                                 HConstants.STATUS_PUBLISHED_DEFAULT);
         Class<? extends ClusterStatusPublisher.Publisher> publisherClass = conf.getClass(ClusterStatusPublisher.STATUS_PUBLISHER_CLASS,
                                                                                          ClusterStatusPublisher.DEFAULT_STATUS_PUBLISHER_CLASS,
                                                                                          ClusterStatusPublisher.Publisher.class);
-
         if (shouldPublish) {
             if (publisherClass == null) {
                 LOG.warn(HConstants.STATUS_PUBLISHED + " is true, but "

@@ -289,7 +289,6 @@ public class Replication implements WALActionsListener,
   /**
    * This method modifies the master's configuration in order to inject
    * replication-related features
-   * @param conf
    */
   public static void decorateMasterConfiguration(Configuration conf) {
     if (!isReplication(conf)) {

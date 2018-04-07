@@ -23,6 +23,7 @@ import org.apache.hadoop.hbase.classification.InterfaceAudience;
 
 /**
  * Wrapper around Hadoop's DNS class to hide reflection.
+ * 覆盖了hadoop自身的dns，解决hadoop主节点和hbase主节点不一致的问题
  */
 @InterfaceAudience.Private
 public final class DNS {
