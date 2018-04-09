@@ -1,39 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <!--
-/**
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-  ON MVN COMPILE NOT WORKING
-
-  If you wondering why 'mvn compile' does not work building HBase
-  (in particular, if you are doing it for the first time), instead do
-  'mvn package'.  If you are interested in the full story, see
-  https://issues.apache.org/jira/browse/HBASE-6795.
-
--->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <!-- /** * Licensed to the Apache Software Foundation (ASF) under one * 
+    or more contributor license agreements. See the NOTICE file * distributed 
+    with this work for additional information * regarding copyright ownership. 
+    The ASF licenses this file * to you under the Apache License, Version 2.0 
+    (the * "License"); you may not use this file except in compliance * with 
+    the License. You may obtain a copy of the License at * * http://www.apache.org/licenses/LICENSE-2.0 
+    * * Unless required by applicable law or agreed to in writing, software * 
+    distributed under the License is distributed on an "AS IS" BASIS, * WITHOUT 
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. * See the 
+    License for the specific language governing permissions and * limitations 
+    under the License. */ ON MVN COMPILE NOT WORKING If you wondering why 'mvn 
+    compile' does not work building HBase (in particular, if you are doing it 
+    for the first time), instead do 'mvn package'. If you are interested in the 
+    full story, see https://issues.apache.org/jira/browse/HBASE-6795. -->
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.apache</groupId>
     <artifactId>apache</artifactId>
     <version>18</version>
-    <relativePath/>
+    <relativePath />
     <!-- no parent resolution -->
   </parent>
   <groupId>org.apache.hbase</groupId>
@@ -49,9 +36,8 @@
   </description>
   <url>http://hbase.apache.org</url>
   <inceptionYear>2007</inceptionYear>
-  <!-- Set here so we can consistently use the correct name, even on branches with
-       an ASF parent pom older than v15. Also uses the url from v18.
-    -->
+  <!-- Set here so we can consistently use the correct name, even on branches 
+    with an ASF parent pom older than v15. Also uses the url from v18. -->
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -423,8 +409,8 @@
       </snapshots>
     </repository>
   </repositories>
-  <!--Add apache snapshots in case we want to use unreleased versions of plugins:
-      e.g. surefire 2.18-SNAPSHOT-->
+  <!--Add apache snapshots in case we want to use unreleased versions of 
+    plugins: e.g. surefire 2.18-SNAPSHOT -->
   <pluginRepositories>
     <pluginRepository>
       <id>apache.snapshots</id>
@@ -451,24 +437,18 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
           <version>2.4.1</version>
-          <!--Making a release I've been using mvn 3.0 and specifying the apache-release
-              profile on the command line as follows:
-
-              $ ~/bin/mvn/bin/mvn  -Papache-release release:perform
-
-              I've also been kiling the release:prepare step mid-way to check the
-              release.properties it generates at the top-level.  Sometimes it refers
-              to HEAD rather than to the svn branch.
-           -->
+          <!--Making a release I've been using mvn 3.0 and specifying the 
+            apache-release profile on the command line as follows: $ ~/bin/mvn/bin/mvn 
+            -Papache-release release:perform I've also been kiling the release:prepare 
+            step mid-way to check the release.properties it generates at the top-level. 
+            Sometimes it refers to HEAD rather than to the svn branch. -->
           <configuration>
-            <!--You need this profile. It'll sign your artifacts.
-                I'm not sure if this config. actually works though.
-                I've been specifying -Papache-release on the command-line
-             -->
+            <!--You need this profile. It'll sign your artifacts. I'm not 
+              sure if this config. actually works though. I've been specifying -Papache-release 
+              on the command-line -->
             <releaseProfiles>apache-release</releaseProfiles>
-            <!--This stops our running tests for each stage of maven release.
-                But it builds the test jar.  From SUREFIRE-172.
-              -->
+            <!--This stops our running tests for each stage of maven release. 
+              But it builds the test jar. From SUREFIRE-172. -->
             <arguments>-Dmaven.test.skip.exec</arguments>
             <goals>${goals}</goals>
             <pomFileName>pom.xml</pomFileName>
@@ -492,9 +472,9 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>${surefire.version}</version>
           <dependencies>
-            <!-- by default surefire selects dynamically the connector to the unit tests
-              tool. We want to use always the same as the different connectors can have different
-              bugs and behaviour. -->
+            <!-- by default surefire selects dynamically the connector to 
+              the unit tests tool. We want to use always the same as the different connectors 
+              can have different bugs and behaviour. -->
             <dependency>
               <groupId>org.apache.maven.surefire</groupId>
               <artifactId>${surefire.provider}</artifactId>
@@ -515,11 +495,10 @@
             </systemPropertyVariables>
 
             <excludes>
-	      <!-- users can add -D option to skip particular test classes
-		   ex: mvn test -Dtest.exclude.pattern=**/TestFoo.java,**/TestBar.java
-	      -->
-	      <exclude>${test.exclude.pattern}</exclude>
-	    </excludes>
+              <!-- users can add -D option to skip particular test classes 
+                ex: mvn test -Dtest.exclude.pattern=**/TestFoo.java,**/TestBar.java -->
+              <exclude>${test.exclude.pattern}</exclude>
+            </excludes>
           </configuration>
           <executions>
             <execution>
@@ -549,8 +528,8 @@
           <configuration>
             <filesets>
               <fileset>
-                <!--dfs tests have build dir hardcoded. Clean it as part of
-               clean target-->
+                <!--dfs tests have build dir hardcoded. Clean it as part 
+                  of clean target -->
                 <directory>build</directory>
               </fileset>
             </filesets>
@@ -587,8 +566,8 @@
           <artifactId>jamon-maven-plugin</artifactId>
           <version>${jamon.plugin.version}</version>
         </plugin>
-        <!-- Make a jar and put the sources in the jar.
-        In the parent pom, so submodules will do the right thing. -->
+        <!-- Make a jar and put the sources in the jar. In the parent pom, 
+          so submodules will do the right thing. -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
@@ -602,7 +581,8 @@
             </execution>
           </executions>
         </plugin>
-        <!-- General configuration for submodules who want to build a test jar -->
+        <!-- General configuration for submodules who want to build a test 
+          jar -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
@@ -610,9 +590,8 @@
             <execution>
               <phase>prepare-package</phase>
               <goals>
-                  <!--This goal will install a -test.jar when we do install
-                      See http://maven.apache.org/guides/mini/guide-attached-tests.html
-                   -->
+                <!--This goal will install a -test.jar when we do install 
+                  See http://maven.apache.org/guides/mini/guide-attached-tests.html -->
                 <goal>test-jar</goal>
               </goals>
             </execution>
@@ -634,14 +613,12 @@
           <artifactId>maven-eclipse-plugin</artifactId>
           <version>2.8</version>
         </plugin>
-        <!--This plugin's configuration is used to store Eclipse m2e settings
-            only. It has no influence on the Maven build itself. m2e does not
-            provide any safeguards against rogue maven plugins that leak
-            classloaders, modify random files inside workspace or throw nasty
-            exceptions to fail the build.
-            Top level doesn't do any specific configuration currently - left
-            to modules to decide what they want to bind, sans those plugins
-            defined in this pom. -->
+        <!--This plugin's configuration is used to store Eclipse m2e settings 
+          only. It has no influence on the Maven build itself. m2e does not provide 
+          any safeguards against rogue maven plugins that leak classloaders, modify 
+          random files inside workspace or throw nasty exceptions to fail the build. 
+          Top level doesn't do any specific configuration currently - left to modules 
+          to decide what they want to bind, sans those plugins defined in this pom. -->
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>
@@ -688,22 +665,22 @@
                     <ignore />
                   </action>
                 </pluginExecution>
-                  <pluginExecution>
-                    <pluginExecutionFilter>
-                      <groupId>org.codehaus.mojo</groupId>
-                      <artifactId>buildnumber-maven-plugin</artifactId>
-                      <versionRange>[1.3,)</versionRange>
-                      <goals>
-                        <goal>create-timestamp</goal>
-                      </goals>
-                    </pluginExecutionFilter>
-                    <action>
-                      <execute>
-                        <runOnConfiguration>true</runOnConfiguration>
-                        <runOnIncremental>true</runOnIncremental>
-                      </execute>
-                    </action>
-                  </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <versionRange>[1.3,)</versionRange>
+                    <goals>
+                      <goal>create-timestamp</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute>
+                      <runOnConfiguration>true</runOnConfiguration>
+                      <runOnIncremental>true</runOnIncremental>
+                    </execute>
+                  </action>
+                </pluginExecution>
               </pluginExecutions>
             </lifecycleMappingMetadata>
           </configuration>
@@ -747,7 +724,7 @@
               <!-- auto-gen docs -->
               <exclude>docs/*</exclude>
               <exclude>logs/*</exclude>
-              <!--  exclude source control files -->
+              <!-- exclude source control files -->
               <exclude>.git/**</exclude>
               <exclude>.svn/**</exclude>
               <exclude>**/.settings/**</exclude>
@@ -760,14 +737,13 @@
           <artifactId>maven-assembly-plugin</artifactId>
           <version>${maven.assembly.version}</version>
           <configuration>
-            <!--Defer to the hbase-assembly sub-module.  It
-             does all assembly-->
+            <!--Defer to the hbase-assembly sub-module. It does all assembly -->
             <skipAssembly>true</skipAssembly>
-            <!--Do not attach assembly to project.-->
+            <!--Do not attach assembly to project. -->
             <attach>false</attach>
           </configuration>
         </plugin>
-       <plugin>
+        <plugin>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-maven-plugins</artifactId>
           <version>${hadoop-two.version}</version>
@@ -775,7 +751,7 @@
             <protocVersion>${protobuf.version}</protocVersion>
             <protocCommand>${protoc.path}</protocCommand>
           </configuration>
-       </plugin>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -819,31 +795,40 @@
             </goals>
             <configuration>
               <rules>
-                <!-- The earliest maven version we verify builds for via ASF Jenkins -->
+                <!-- The earliest maven version we verify builds for via 
+                  ASF Jenkins -->
                 <requireMavenVersion>
                   <version>[${maven.min.version},)</version>
                   <message>Maven is out of date.
-  HBase requires at least version ${maven.min.version} of Maven to properly build from source.
-  You appear to be using an older version. You can use either "mvn -version" or
-  "mvn enforcer:display-info" to verify what version is active.
-  See the reference guide on building for more information: http://hbase.apache.org/book.html#build
+                    HBase requires at least version ${maven.min.version} of Maven to
+                    properly build from source.
+                    You appear to be using an older version. You can use either "mvn
+                    -version" or
+                    "mvn enforcer:display-info" to verify what version is active.
+                    See the reference guide on building for more information:
+                    http://hbase.apache.org/book.html#build
                   </message>
                 </requireMavenVersion>
-                <!-- The earliest JVM version we verify builds for via ASF Jenkins -->
+                <!-- The earliest JVM version we verify builds for via ASF 
+                  Jenkins -->
                 <requireJavaVersion>
                   <version>[${java.min.version},)</version>
                   <message>Java is out of date.
-  HBase requirs at least version ${java.min.version} of the JDK to properly build from source.
-  You appear to be using an older version. You can use either "mvn -version" or
-  "mvn enforcer:display-info" to verify what version is active.
-  See the reference guide on building for more information: http://hbase.apache.org/book.html#build
+                    HBase requirs at least version ${java.min.version} of the JDK to
+                    properly build from source.
+                    You appear to be using an older version. You can use either "mvn
+                    -version" or
+                    "mvn enforcer:display-info" to verify what version is active.
+                    See the reference guide on building for more information:
+                    http://hbase.apache.org/book.html#build
                   </message>
                 </requireJavaVersion>
                 <bannedDependencies>
                   <excludes>
                     <exclude>xerces:xercesImpl</exclude>
                   </excludes>
-                  <message>We avoid adding our own Xerces jars to the classpath, see HBASE-16340.</message>
+                  <message>We avoid adding our own Xerces jars to the
+                    classpath, see HBASE-16340.</message>
                 </bannedDependencies>
               </rules>
             </configuration>
@@ -859,7 +844,8 @@
                   <excludes>
                     <exclude>com.google.code.findbugs:jsr305</exclude>
                   </excludes>
-                  <message>We don't allow the JSR305 jar from the Findbugs project, see HBASE-16321.</message>
+                  <message>We don't allow the JSR305 jar from the
+                    Findbugs project, see HBASE-16321.</message>
                 </bannedDependencies>
               </rules>
             </configuration>
@@ -874,7 +860,8 @@
         <inherited>false</inherited>
         <executions>
           <execution>
-            <!-- Run the hbase-default.xml through a stylesheet so can show it in doc-->
+            <!-- Run the hbase-default.xml through a stylesheet so can show 
+              it in doc -->
             <goals>
               <goal>transform</goal>
             </goals>
@@ -884,14 +871,15 @@
         <configuration>
           <transformationSets>
             <transformationSet>
-              <!--Reaching up and over into common sub-module for hbase-default.xml-->
+              <!--Reaching up and over into common sub-module for hbase-default.xml -->
               <dir>${basedir}/hbase-common/src/main/resources/</dir>
               <includes>
                 <include>hbase-default.xml</include>
               </includes>
               <stylesheet>${basedir}/src/main/xslt/configuration_to_asciidoc_chapter.xsl</stylesheet>
               <fileMappers>
-                <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
+                <fileMapper
+                  implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
                   <pattern>^(.*)\.xml$</pattern>
                   <replacement>$1.adoc</replacement>
                 </fileMapper>
@@ -901,8 +889,8 @@
           </transformationSets>
         </configuration>
       </plugin>
-      <!-- Special configuration for findbugs just in the parent so
-      the filter file location can be more general (see definition in pluginManagement) -->
+      <!-- Special configuration for findbugs just in the parent so the filter 
+        file location can be more general (see definition in pluginManagement) -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
@@ -1043,9 +1031,9 @@
         <version>${asciidoctor.plugin.version}</version>
         <executions>
           <execution>
-            <id>output-html</id> 
+            <id>output-html</id>
             <goals>
-              <goal>process-asciidoc</goal> 
+              <goal>process-asciidoc</goal>
             </goals>
             <phase>site</phase>
             <configuration>
@@ -1087,12 +1075,13 @@
     </plugins>
   </build>
   <properties>
-    <!-- override on command line to have generated LICENSE files include
-         diagnostic info for verifying notice requirements -->
+    <!-- override on command line to have generated LICENSE files include 
+      diagnostic info for verifying notice requirements -->
     <license.debug.print.included>false</license.debug.print.included>
     <!-- When a particular module bundles its depenendencies, should be true -->
     <license.bundles.dependencies>false</license.bundles.dependencies>
-    <!-- modules that include a the logo in their source tree should set true -->
+    <!-- modules that include a the logo in their source tree should set 
+      true -->
     <license.bundles.logo>false</license.bundles.logo>
     <!-- modules that include bootstrap in their source tree should set true -->
     <license.bundles.bootstrap>false</license.bundles.bootstrap>
@@ -1165,8 +1154,8 @@
     <package.release>1</package.release>
     <final.name>${project.artifactId}-${project.version}</final.name>
     <!-- Intraproject jar naming properties -->
-    <!-- TODO this is pretty ugly, but works for the moment.
-      Modules are pretty heavy-weight things, so doing this work isn't too bad. -->
+    <!-- TODO this is pretty ugly, but works for the moment. Modules are 
+      pretty heavy-weight things, so doing this work isn't too bad. -->
     <server.test.jar>hbase-server-${project.version}-tests.jar</server.test.jar>
     <common.test.jar>hbase-common-${project.version}-tests.jar</common.test.jar>
     <it.test.jar>hbase-it-${project.version}-tests.jar</it.test.jar>
@@ -1183,18 +1172,25 @@
     <test.output.tofile>true</test.output.tofile>
     <surefire.timeout>900</surefire.timeout>
     <test.exclude.pattern></test.exclude.pattern>
-    <!-- default Xmx value is 2800m. Use -Dsurefire.Xmx=xxg to run tests with different JVM Xmx value -->
+    <!-- default Xmx value is 2800m. Use -Dsurefire.Xmx=xxg to run tests 
+      with different JVM Xmx value -->
     <surefire.Xmx>2800m</surefire.Xmx>
     <surefire.cygwinXmx>2800m</surefire.cygwinXmx>
-    <hbase-surefire.argLine>-enableassertions -XX:MaxDirectMemorySize=1G -Xmx${surefire.Xmx}
-      -XX:MaxPermSize=256m -Djava.security.egd=file:/dev/./urandom -Djava.net.preferIPv4Stack=true
+    <hbase-surefire.argLine>-enableassertions -XX:MaxDirectMemorySize=1G
+      -Xmx${surefire.Xmx}
+      -XX:MaxPermSize=256m
+      -Djava.security.egd=file:/dev/./urandom
+      -Djava.net.preferIPv4Stack=true
       -Djava.awt.headless=true
     </hbase-surefire.argLine>
-    <hbase-surefire.cygwin-argLine>-enableassertions -Xmx${surefire.cygwinXmx} -XX:MaxPermSize=256m
-      -Djava.security.egd=file:/dev/./urandom -Djava.net.preferIPv4Stack=true
+    <hbase-surefire.cygwin-argLine>-enableassertions
+      -Xmx${surefire.cygwinXmx} -XX:MaxPermSize=256m
+      -Djava.security.egd=file:/dev/./urandom
+      -Djava.net.preferIPv4Stack=true
       "-Djava.library.path=${hadoop.library.path};${java.library.path}"
     </hbase-surefire.cygwin-argLine>
-    <!-- Surefire argLine defaults to Linux, cygwin argLine is used in the os.windows profile -->
+    <!-- Surefire argLine defaults to Linux, cygwin argLine is used in the 
+      os.windows profile -->
     <argLine>${hbase-surefire.argLine}</argLine>
     <jacoco.version>0.7.5.201505241946</jacoco.version>
     <extra.enforcer.version>1.0-beta-3</extra.enforcer.version>
@@ -1204,13 +1200,11 @@
   <!-- Sorted by groups of dependencies then groupId and artifactId -->
   <dependencyManagement>
     <dependencies>
-      <!--
-      Note: There are a few exclusions to prevent duplicate code in different jars to be included:
-          org.mortbay.jetty:servlet-api, javax.servlet:servlet-api: These are excluded because they are
-          the same implementations. I chose org.mortbay.jetty:servlet-api-2.5 instead, which is a third
-          implementation of the same, because Hadoop also uses this version
-          javax.servlet:jsp-api in favour of org.mortbay.jetty:jsp-api-2.1
-        -->
+      <!-- Note: There are a few exclusions to prevent duplicate code in 
+        different jars to be included: org.mortbay.jetty:servlet-api, javax.servlet:servlet-api: 
+        These are excluded because they are the same implementations. I chose org.mortbay.jetty:servlet-api-2.5 
+        instead, which is a third implementation of the same, because Hadoop also 
+        uses this version javax.servlet:jsp-api in favour of org.mortbay.jetty:jsp-api-2.1 -->
       <!-- Intra-module dependencies -->
       <dependency>
         <groupId>org.apache.hbase</groupId>
@@ -1314,17 +1308,18 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-          <groupId>org.apache.hbase</groupId>
-          <artifactId>hbase-testing-util</artifactId>
-          <version>${project.version}</version>
-          <scope>test</scope>
+        <groupId>org.apache.hbase</groupId>
+        <artifactId>hbase-testing-util</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.hbase</groupId>
         <artifactId>hbase-prefix-tree</artifactId>
         <version>${project.version}</version>
-        <!-- unfortunately, runtime scope causes Eclipse to give compile time access which isn't
-          needed, however it is apparently needed to run things within Eclipse -->
+        <!-- unfortunately, runtime scope causes Eclipse to give compile 
+          time access which isn't needed, however it is apparently needed to run things 
+          within Eclipse -->
         <scope>runtime</scope>
       </dependency>
       <dependency>
@@ -1361,8 +1356,8 @@
         <artifactId>log4j</artifactId>
         <version>${log4j.version}</version>
       </dependency>
-      <!--This is not used by hbase directly.  Used by thrift,
-          yammer and zk.-->
+      <!--This is not used by hbase directly. Used by thrift, yammer and 
+        zk. -->
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
@@ -1533,9 +1528,9 @@
         <artifactId>servlet-api-2.5</artifactId>
         <version>${jetty.jspapi.version}</version>
       </dependency>
-      <!-- While jackson is also a dependency of jersey it
-           can bring in jars from different, incompatible versions. We force
-           the same version with these dependencies -->
+      <!-- While jackson is also a dependency of jersey it can bring in jars 
+        from different, incompatible versions. We force the same version with these 
+        dependencies -->
       <dependency>
         <groupId>org.codehaus.jackson</groupId>
         <artifactId>jackson-core-asl</artifactId>
@@ -1557,12 +1552,9 @@
         <version>${jackson.version}</version>
       </dependency>
       <dependency>
-        <!--If this is not in the runtime lib, we get odd
-      "2009-02-27 11:38:39.504::WARN:  failed jsp
-       java.lang.NoSuchFieldError: IS_SECURITY_ENABLED"
-       exceptions out of jetty deploying webapps.
-       St.Ack Thu May 20 01:04:41 PDT 2010
-      -->
+        <!--If this is not in the runtime lib, we get odd "2009-02-27 11:38:39.504::WARN: 
+          failed jsp java.lang.NoSuchFieldError: IS_SECURITY_ENABLED" exceptions out 
+          of jetty deploying webapps. St.Ack Thu May 20 01:04:41 PDT 2010 -->
         <groupId>tomcat</groupId>
         <artifactId>jasper-compiler</artifactId>
         <version>${jasper.version}</version>
@@ -1681,31 +1673,11 @@
       <artifactId>mockito-all</artifactId>
     </dependency>
   </dependencies>
-  <!--
-  To publish, use the following settings.xml file ( placed in ~/.m2/settings.xml )
-
- <settings>
-  <servers>
-    <server>
-      <id>apache.releases.https</id>
-      <username>hbase_committer</username>
-      <password>********</password>
-    </server>
-
-    <server>
-      <id>apache.snapshots.https</id>
-      <username>hbase_committer</username>
-      <password>********</password>
-    </server>
-
-  </servers>
- </settings>
-
-  $ mvn deploy
-(or)
-  $ mvn -s /my/path/settings.xml deploy
-
-  -->
+  <!-- To publish, use the following settings.xml file ( placed in ~/.m2/settings.xml 
+    ) <settings> <servers> <server> <id>apache.releases.https</id> <username>hbase_committer</username> 
+    <password>********</password> </server> <server> <id>apache.snapshots.https</id> 
+    <username>hbase_committer</username> <password>********</password> </server> 
+    </servers> </settings> $ mvn deploy (or) $ mvn -s /my/path/settings.xml deploy -->
   <profiles>
     <profile>
       <id>jacoco</id>
@@ -1803,33 +1775,39 @@
             <configuration>
               <rules>
                 <enforceBytecodeVersion>
-                <maxJdkVersion>${compileSource}</maxJdkVersion>
-                <message>HBase has unsupported dependencies.
-  HBase requires that all dependencies be compiled with version ${compileSource} or earlier
-  of the JDK to properly build from source.  You appear to be using a newer dependency. You can use
-  either "mvn -version" or "mvn enforcer:display-info" to verify what version is active.
-  Non-release builds can temporarily build with a newer JDK version by setting the
-  'compileSource' property (eg. mvn -DcompileSource=1.8 clean package).
-                </message>
-              </enforceBytecodeVersion>
-            </rules>
-          </configuration>
+                  <maxJdkVersion>${compileSource}</maxJdkVersion>
+                  <message>HBase has unsupported dependencies.
+                    HBase requires that all dependencies be compiled with version
+                    ${compileSource} or earlier
+                    of the JDK to properly build from source. You appear to be using
+                    a newer dependency. You can use
+                    either "mvn -version" or "mvn enforcer:display-info" to verify what
+                    version is active.
+                    Non-release builds can temporarily build with a newer JDK version by
+                    setting the
+                    'compileSource' property (eg. mvn -DcompileSource=1.8 clean package).
+                  </message>
+                </enforceBytecodeVersion>
+              </rules>
+            </configuration>
           </plugin>
         </plugins>
       </build>
     </profile>
-    <!-- Dependency management profiles for submodules when building against specific hadoop branches.-->
-    <!-- Submodules that need hadoop dependencies should declare
-    profiles with activation properties matching the profile here.
-    Generally, it should be sufficient to copy the first
-    few lines of the profile you want to match.  -->
+    <!-- Dependency management profiles for submodules when building against 
+      specific hadoop branches. -->
+    <!-- Submodules that need hadoop dependencies should declare profiles 
+      with activation properties matching the profile here. Generally, it should 
+      be sufficient to copy the first few lines of the profile you want to match. -->
     <!-- profile against Hadoop 1.1.x. -->
     <profile>
       <id>hadoop-1.1</id>
       <activation>
         <property>
-            <!--Below formatting for dev-support/generate-hadoopX-poms.sh-->
-            <!--h1--><name>hadoop.profile</name><value>1.1</value>
+          <!--Below formatting for dev-support/generate-hadoopX-poms.sh -->
+          <!--h1 -->
+          <name>hadoop.profile</name>
+          <value>1.1</value>
         </property>
       </activation>
       <modules>
@@ -1880,15 +1858,14 @@
         </dependencies>
       </dependencyManagement>
     </profile>
-    <!-- profile for building against Hadoop 2.0.x
-         This is the default.
-         -->
+    <!-- profile for building against Hadoop 2.0.x This is the default. -->
     <profile>
       <id>hadoop-2.0</id>
       <activation>
         <property>
-            <!--Below formatting for dev-support/generate-hadoopX-poms.sh-->
-            <!--h2--><name>!hadoop.profile</name>
+          <!--Below formatting for dev-support/generate-hadoopX-poms.sh -->
+          <!--h2 -->
+          <name>!hadoop.profile</name>
         </property>
       </activation>
       <modules>
@@ -1920,19 +1897,19 @@
           <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-hdfs</artifactId>
-              <exclusions>
-                <exclusion>
-                  <groupId>javax.servlet.jsp</groupId>
-                  <artifactId>jsp-api</artifactId>
-                </exclusion>
-                <exclusion>
-                  <groupId>javax.servlet</groupId>
-                  <artifactId>servlet-api</artifactId>
-                </exclusion>
-                <exclusion>
-                  <groupId>stax</groupId>
-                  <artifactId>stax-api</artifactId>
-                </exclusion>
+            <exclusions>
+              <exclusion>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>stax</groupId>
+                <artifactId>stax-api</artifactId>
+              </exclusion>
               <exclusion>
                 <groupId>xerces</groupId>
                 <artifactId>xercesImpl</artifactId>
@@ -1945,19 +1922,19 @@
             <artifactId>hadoop-hdfs</artifactId>
             <version>${hadoop-two.version}</version>
             <type>test-jar</type>
-              <exclusions>
-                <exclusion>
-                  <groupId>javax.servlet.jsp</groupId>
-                  <artifactId>jsp-api</artifactId>
-                </exclusion>
-                <exclusion>
-                  <groupId>javax.servlet</groupId>
-                  <artifactId>servlet-api</artifactId>
-                </exclusion>
-                <exclusion>
-                  <groupId>stax</groupId>
-                  <artifactId>stax-api</artifactId>
-                </exclusion>
+            <exclusions>
+              <exclusion>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>stax</groupId>
+                <artifactId>stax-api</artifactId>
+              </exclusion>
               <exclusion>
                 <groupId>xerces</groupId>
                 <artifactId>xercesImpl</artifactId>
@@ -1997,8 +1974,8 @@
             <artifactId>hadoop-client</artifactId>
             <version>${hadoop-two.version}</version>
           </dependency>
-          <!-- This was marked as test dep in earlier pom, but was scoped compile.
-            Where do we actually need it? -->
+          <!-- This was marked as test dep in earlier pom, but was scoped 
+            compile. Where do we actually need it? -->
           <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-minicluster</artifactId>
@@ -2029,11 +2006,8 @@
         </dependencies>
       </dependencyManagement>
     </profile>
-   
-    <!--
-      profile for building against Hadoop 3.0.0. Activate using:
-       mvn -Dhadoop.profile=3.0
-    -->
+
+    <!-- profile for building against Hadoop 3.0.0. Activate using: mvn -Dhadoop.profile=3.0 -->
     <profile>
       <id>hadoop-3.0</id>
       <activation>
@@ -2072,9 +2046,8 @@
       </dependencies>
     </profile>
 
-    <!-- profiles for the tests
-         See as well the properties of the project for the values
-         when no profile is active.     -->
+    <!-- profiles for the tests See as well the properties of the project 
+      for the values when no profile is active. -->
     <profile>
       <!-- Use it to launch the tests without parallelisation -->
       <id>nonParallelTests</id>
@@ -2088,7 +2061,7 @@
       </properties>
     </profile>
     <profile>
-      <!-- Use it to launch the tests in parallel in the same JVM  -->
+      <!-- Use it to launch the tests in parallel in the same JVM -->
       <id>parallelTests</id>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -2100,7 +2073,7 @@
       </properties>
     </profile>
     <profile>
-      <!-- Use it to launch the tests in the same JVM  -->
+      <!-- Use it to launch the tests in the same JVM -->
       <id>singleJVMTests</id>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -2111,7 +2084,7 @@
         <surefire.firstPartThreadCount>1</surefire.firstPartThreadCount>
         <surefire.skipFirstPart>false</surefire.skipFirstPart>
         <surefire.skipSecondPart>true</surefire.skipSecondPart>
-        <surefire.firstPartGroups/>
+        <surefire.firstPartGroups />
       </properties>
     </profile>
     <profile>
@@ -2127,7 +2100,7 @@
         <surefire.skipFirstPart>false</surefire.skipFirstPart>
         <surefire.skipSecondPart>true</surefire.skipSecondPart>
         <surefire.firstPartGroups>org.apache.hadoop.hbase.testclassification.SmallTests</surefire.firstPartGroups>
-        <surefire.secondPartGroups/>
+        <surefire.secondPartGroups />
       </properties>
     </profile>
     <profile>
@@ -2141,7 +2114,7 @@
         <surefire.skipFirstPart>false</surefire.skipFirstPart>
         <surefire.skipSecondPart>true</surefire.skipSecondPart>
         <surefire.firstPartGroups>org.apache.hadoop.hbase.testclassification.MediumTests</surefire.firstPartGroups>
-        <surefire.secondPartGroups/>
+        <surefire.secondPartGroups />
       </properties>
     </profile>
     <profile>
@@ -2155,7 +2128,7 @@
         <surefire.skipFirstPart>false</surefire.skipFirstPart>
         <surefire.skipSecondPart>true</surefire.skipSecondPart>
         <surefire.firstPartGroups>org.apache.hadoop.hbase.testclassification.LargeTests</surefire.firstPartGroups>
-        <surefire.secondPartGroups/>
+        <surefire.secondPartGroups />
       </properties>
     </profile>
     <profile>
@@ -2192,7 +2165,7 @@
       </properties>
     </profile>
     <profile>
-      <!-- Use it to launch tests locally-->
+      <!-- Use it to launch tests locally -->
       <id>localTests</id>
       <activation>
         <property>
@@ -2204,15 +2177,16 @@
         <surefire.firstPartForkMode>always</surefire.firstPartForkMode>
         <surefire.skipFirstPart>false</surefire.skipFirstPart>
         <surefire.skipSecondPart>true</surefire.skipSecondPart>
-        <surefire.firstPartGroups/>
+        <surefire.firstPartGroups />
       </properties>
     </profile>
-    <!-- Profile for running clover. You need to have a clover license under ~/.clover.license for ${clover.version}
-         or you can provide the license with -Dmaven.clover.licenseLocation=/path/to/license. Committers can find
-         the license under https://svn.apache.org/repos/private/committers/donated-licenses/clover/
-         Note that clover 2.6.3 does not run with maven 3, so you have to use maven2. The report will be generated
-         under target/site/clover/index.html when you run
-         MAVEN_OPTS=-Xmx2048m mvn clean test -Pclover site -->
+    <!-- Profile for running clover. You need to have a clover license under 
+      ~/.clover.license for ${clover.version} or you can provide the license with 
+      -Dmaven.clover.licenseLocation=/path/to/license. Committers can find the 
+      license under https://svn.apache.org/repos/private/committers/donated-licenses/clover/ 
+      Note that clover 2.6.3 does not run with maven 3, so you have to use maven2. 
+      The report will be generated under target/site/clover/index.html when you 
+      run MAVEN_OPTS=-Xmx2048m mvn clean test -Pclover site -->
     <profile>
       <id>clover</id>
       <activation>
@@ -2262,7 +2236,8 @@
       </build>
     </profile>
   </profiles>
-  <!-- See http://jira.codehaus.org/browse/MSITE-443 why the settings need to be here and not in pluginManagement. -->
+  <!-- See http://jira.codehaus.org/browse/MSITE-443 why the settings need 
+    to be here and not in pluginManagement. -->
   <reporting>
     <plugins>
       <plugin>
@@ -2369,9 +2344,7 @@
     <site>
       <id>hbase.apache.org</id>
       <name>HBase Website at hbase.apache.org</name>
-      <!-- On why this is the tmp dir and not hbase.apache.org, see
-               https://issues.apache.org/jira/browse/HBASE-7593?focusedCommentId=13555866&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-13555866
-               -->
+      <!-- On why this is the tmp dir and not hbase.apache.org, see https://issues.apache.org/jira/browse/HBASE-7593?focusedCommentId=13555866&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-13555866 -->
       <url>file:///tmp</url>
     </site>
   </distributionManagement>
